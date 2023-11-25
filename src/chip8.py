@@ -208,6 +208,7 @@ class cpu(pyglet.window.Window):
         try:
             self.funcmap[extracted_op]()
         except:
+            print('_8ZZZ')
             print("Unknown instruction: %X" % self.opcode)
 
     def _8ZZ0(self):
@@ -335,6 +336,7 @@ class cpu(pyglet.window.Window):
         try:
             self.funcmap[extracted_op]()
         except:
+            print('_EZZZ')
             print("Unknown instruction: %X" % self.opcode)
 
     def _EZZE(self):
@@ -352,8 +354,13 @@ class cpu(pyglet.window.Window):
     def _FZZZ(self):
         extracted_op = self.opcode & 0xF0FF
         try:
-            self.funcmap[extracted_op]()
+            if hex(extracted_op) == '0xf029':
+                # self.funcmap[0xF029]()
+                self._FZ29()
+            else:
+                self.funcmap[extracted_op]()
         except:
+            print(f'_FZZZ {hex(extracted_op)}')
             print("Unknown instruction: %X" % self.opcode)
 
     def _FZ07(self):
@@ -505,7 +512,7 @@ class cpu(pyglet.window.Window):
         try:
             self.funcmap[extracted_op]()
         except:
-            print(f'{self.opcode}')
+            print(f'cycle')
             print("Unknown instruction: %X" % self.opcode)
 
         if self.delay_timer > 0:
